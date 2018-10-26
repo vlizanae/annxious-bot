@@ -13,10 +13,11 @@ class Database:
             'postgresql+psycopg2://{}:{}@localhost/annxious'
             .format(psql_user, psql_pass)
         )
+        self.Session = sessionmaker(bind=self.engine)
+
         self.User = None
-        self.session = None
-        if session:
-            self.start_session()
+        self.create_schema(commit=False)
+
 
     def create_schema(self, commit=True):
         Base = declarative_base()
@@ -29,35 +30,28 @@ class Database:
             Base.metadata.create_all(self.engine)
 
     def drop_all(self):
-        if self.session is not None:
-            self.close_session()
         meta = MetaData(bind=self.engine)
         meta.reflect()
         meta.drop_all()
 
-    def start_session(self):
-        self.create_schema(commit=False)
-        self.session = sessionmaker(bind=self.engine)()
-
-    def close_session(self):
-        self.session.close()
-
     def add_user(self, id, name):
-        assert self.session is not None
-        self.session.add(
+        session = self.Session()
+        session.add(
             self.User(name=name, conversation_id=id)
         )
-        self.session.commit()
+        session.commit()
+        session.close()
 
     def get_user(self, id):
-        assert self.session is not None
+        session = self.Session()
         user = None
         try:
             user = (
-                self.session.query(self.User)
-                    .filter(self.User.conversation_id == id)
-                    .one()
+                session.query(self.User)
+                .filter(self.User.conversation_id == id)
+                .one()
             )
         except NoResultFound:
-            self.session.rollback()
+            session.rollback()
+        session.close()
         return user
