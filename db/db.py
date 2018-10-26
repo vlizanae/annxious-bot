@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm.exc import NoResultFound
 
 from secret import psql_user, psql_pass
 from .models import UserModelMixin
@@ -28,6 +29,8 @@ class Database:
             Base.metadata.create_all(self.engine)
 
     def drop_all(self):
+        if self.session is not None:
+            self.close_session()
         meta = MetaData(bind=self.engine)
         meta.reflect()
         meta.drop_all()
@@ -39,15 +42,22 @@ class Database:
     def close_session(self):
         self.session.close()
 
-    def add_user(self, name):
+    def add_user(self, id, name):
         assert self.session is not None
-        self.session.add(self.User(name=name))
+        self.session.add(
+            self.User(name=name, conversation_id=id)
+        )
         self.session.commit()
 
     def get_user(self, id):
         assert self.session is not None
-        return (
-            self.session.query(self.User)
-                .filter(self.User.id == id)
-                .one()
-        )
+        user = None
+        try:
+            user = (
+                self.session.query(self.User)
+                    .filter(self.User.conversation_id == id)
+                    .one()
+            )
+        except NoResultFound:
+            self.session.rollback()
+        return user
