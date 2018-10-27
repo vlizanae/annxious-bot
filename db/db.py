@@ -18,7 +18,6 @@ class Database:
         self.User = None
         self.create_schema(commit=False)
 
-
     def create_schema(self, commit=True):
         Base = declarative_base()
 

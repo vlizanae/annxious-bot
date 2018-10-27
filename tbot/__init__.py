@@ -1,1 +1,1 @@
-from .tbot import run_tbot
+from .tbot import TelegramBot
