@@ -1,4 +1,4 @@
 env
 *__pycache__*
-secret/__init__.py
+config
 .idea

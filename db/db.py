@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.exc import NoResultFound
 
-from secret import psql_user, psql_pass
+from config import psql_user, psql_pass
 from .models import UserModelMixin
 
 
