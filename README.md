@@ -39,10 +39,9 @@ any part of your dataset.
 
 ## How to host the bot
 ANNxious is written in Python 3 and uses PostgreSQL as its
-backend to store the users, for the time being it is not
-really necessary but it might be for some features I might
-come up with. Other than setting up the database you need to
+backend to store the users and the metrics of the models.
+Other than setting up the database you will need to
 create a config module to store the credentials, install the
 `requirements.txt` and you are good to go, you will need to
-register the bot with Telegram's [BotFather](t.me/BotFather) to get your
-own Telegram's API token.
+register the bot with Telegram's [BotFather](t.me/BotFather)
+to get your own Telegram's API token.

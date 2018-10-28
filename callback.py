@@ -1,6 +1,7 @@
 from keras.callbacks import Callback
 import requests, warnings, random
 
+
 class ANNxiousRemoteMonitor(Callback):
     def __init__(self, user_id, network_id,
                  url='http://localhost:8000',
@@ -35,7 +36,10 @@ class ANNxiousRemoteMonitor(Callback):
                 send[name] = param
 
         try:
-            requests.post(self.url, json=send, headers=self.headers)
+            r = requests.post(self.url, json=send, headers=self.headers)
+            if r.status_code == 404:
+                warnings.warn('Warning: It seems like ANNxious haven\'t heard of you. '
+                              'Talk to him at https://t.me/ANNxiousBot')
         except requests.exceptions.RequestException as e:
             if self.connection_warnings:
                 warnings.warn(self.warning_text)
