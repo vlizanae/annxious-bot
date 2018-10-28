@@ -1,5 +1,5 @@
 from keras.callbacks import Callback
-import requests, warnings
+import requests, warnings, random
 
 class ANNxiousRemoteMonitor(Callback):
     def __init__(self, user_id, network_id,
@@ -9,7 +9,7 @@ class ANNxiousRemoteMonitor(Callback):
         super(ANNxiousRemoteMonitor, self).__init__()
 
         self.user_id = user_id
-        self.network_id = network_id
+        self.network_id = '{}-{}'.format(network_id, random.randint(1000, 9999))
         self.url = url
         self.headers = headers
         self.connection_warnings = connection_warnings

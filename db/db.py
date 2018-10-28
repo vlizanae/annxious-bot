@@ -1,9 +1,11 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
+
+from datetime import datetime
 
 from config import psql_user, psql_pass
-from .models import UserModelMixin
+from .models import UserModelMixin, NetworkModelMixin
 
 
 class Database:
@@ -26,6 +28,11 @@ class Database:
             pass
         self.User = User
 
+        class Network(Base, NetworkModelMixin):
+            pass
+        self.Network = Network
+
+
         if commit:
             Base.metadata.create_all(self.engine)
 
@@ -40,7 +47,7 @@ class Database:
                 self.User(name=name, conversation_id=id)
             )
             self.session.commit()
-        except:
+        except Exception:
             self.session.rollback()
 
     def get_user(self, id):
@@ -54,3 +61,66 @@ class Database:
         except:
             self.session.rollback()
         return user
+
+    def add_network(self, user_cid, name):
+        user = self.get_user(user_cid)
+        try:
+            self.session.add(
+                self.Network(
+                    user_id=user.id,
+                    name=name,
+                    created=datetime.now(),
+                    epoch=0
+                )
+            )
+            self.session.commit()
+        except Exception:
+            self.session.rollback()
+
+    def remove_network(self, id):
+        try:
+            network = (
+                self.session.query(self.Network)
+                .filter(self.Network.id == id)
+                .one()
+            )
+            self.session.delete(network)
+        except:
+            self.session.rollback()
+
+    def update_network(self, **kwargs):
+        try:
+            network = (
+                self.session.query(self.Network)
+                .filter(self.Network.name == kwargs['network_id'])
+                .one()
+            )
+            network.epoch = kwargs['epoch']
+
+            network.train_loss = kwargs['loss']
+            if kwargs['epoch'] == 0 or kwargs['loss'] < network.best_train_loss:
+                network.best_train_loss = kwargs['loss']
+                network.best_train_epoch = kwargs['epoch']
+
+            if 'val_loss' in kwargs.keys():
+                network.val_loss = kwargs['val_loss']
+                if kwargs['epoch'] == 0 or kwargs['val_loss'] < network.best_val_loss:
+                    network.best_val_loss = kwargs['val_loss']
+                    network.best_val_epoch = kwargs['epoch']
+
+            self.session.commit()
+        except:
+            self.session.rollback()
+
+    def deactivate_network(self, id):
+        try:
+            network = (
+                self.session.query(self.Network)
+                .filter(self.Network.name == id)
+                .one()
+            )
+            network.active = False
+            network.train_ended = datetime.now()
+            self.session.commit()
+        except:
+            self.session.rollback()

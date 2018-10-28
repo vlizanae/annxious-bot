@@ -14,24 +14,25 @@ logging.basicConfig(
 
 
 class TelegramBot:
-    def __init__(self):
+    def __init__(self, db):
         self.bot = Bot(
             token=annxious_tbot_token,
             request=Request(con_pool_size=10)
         )
+        self.db = db
 
-    def run_tbot(self, db):
+    def run_tbot(self):
         updater = Updater(bot=self.bot)
 
         # Views
         updater.dispatcher.add_handler(
-            CommandHandler('start', lambda bot, update: start(bot, update, db))
+            CommandHandler('start', lambda bot, update: start(bot, update, self.db))
         )
         updater.dispatcher.add_handler(
             CommandHandler('help', help)
         )
         updater.dispatcher.add_handler(
-            CommandHandler('userid', lambda bot, update: userid(bot, update, db))
+            CommandHandler('userid', lambda bot, update: userid(bot, update, self.db))
         )
 
         updater.start_polling()

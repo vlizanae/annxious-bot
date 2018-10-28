@@ -1,7 +1,7 @@
 message = {
     'WELCOME': 'Welcome {user_name}, I\'m ANNxious to give you some results! '
                'Don\'t forget to copy my custom Keras\' callback template from '
-               '{callback_url}, point its root to {hosting_url}, pass it to your '
+               '{callback_url}, point its url to {hosting_url}, pass it to your '
                'model and I\'ll keep in touch.\n'
                '\n'
                'Also you user id is {user_id}, you\'ll need it to use the callback.',
