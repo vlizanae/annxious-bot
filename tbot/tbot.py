@@ -23,6 +23,7 @@ class TelegramBot:
     def run_tbot(self, db):
         updater = Updater(bot=self.bot)
 
+        # Views
         updater.dispatcher.add_handler(
             CommandHandler('start', lambda bot, update: start(bot, update, db))
         )

@@ -29,6 +29,14 @@ log = model.fit(
 ```
 * That's it.
 
+#### About your data
+
+As data scientists we care about data. The only data coming
+out of your machine are the metrics you can see in each epoch
+line yielded by `model.fit`, which are completely meaningless
+without context. ANNxious does not have any kind of access to
+any part of your dataset.
+
 ## How to host the bot
 ANNxious is written in Python 3 and uses PostgreSQL as its
 backend to store the users, for the time being it is not

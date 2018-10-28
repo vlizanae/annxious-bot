@@ -3,7 +3,8 @@ message = {
                'Don\'t forget to copy my custom Keras\' callback template from '
                '{callback_url}, point its root to {hosting_url}, pass it to your '
                'model and I\'ll keep in touch.\n'
-               'Also you user id is {user_id}, you\'ll need it tu use the callback.',
+               '\n'
+               'Also you user id is {user_id}, you\'ll need it to use the callback.',
 
     'WELCOME_BACK': 'Welcome back {user_name}, if you don\'t already know what to '
                     'do, type /help to get us started.',
@@ -32,7 +33,7 @@ message = {
             ' - /help to see this message (again?).\n'
             ' - /userid in case you lost you user id.\n '
             '\n'
-            'I don\'t hold any information about you or your models (other than your '
-            'telegram\'s user name) and I\'m open source, feel free to submit any bug '
+            'I don\'t have any kind of access to any part of your dataset and '
+            'will never have. Also I\'m open source, feel free to submit any bug '
             'report as an issue at my repo.'
 }

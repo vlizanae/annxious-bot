@@ -14,7 +14,8 @@ def start(bot, update, db):
             text=message['WELCOME'].format(
                 user_name=user_name,
                 callback_url=callback_url,
-                hosting_url=hosting_url
+                hosting_url=hosting_url,
+                user_id=user_id
             )
         )
     else:

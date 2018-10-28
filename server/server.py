@@ -15,23 +15,25 @@ def get_server_handler(bot):
             content_length = int(self.headers['Content-Length'])
             data = json.loads(self.rfile.read(content_length))
 
-            if data['kind'] == 'train_begin':
-                bot.send_message(
-                    id=data['user_id'],
-                    message=message['TRAIN_BEGIN'].format(
-                        network_id=data['network_id']
+            user = self.bot.db.get_user(data['user_id'])
+            if user:
+                if data['kind'] == 'train_begin':
+                    bot.send_message(
+                        id=data['user_id'],
+                        message=message['TRAIN_BEGIN'].format(
+                            network_id=data['network_id']
+                        )
                     )
-                )
-            elif data['kind'] == 'train_end':
-                bot.send_message(
-                    id=data['user_id'],
-                    message=message['TRAIN_END'].format(
-                        network_id=data['network_id']
+                elif data['kind'] == 'train_end':
+                    bot.send_message(
+                        id=data['user_id'],
+                        message=message['TRAIN_END'].format(
+                            network_id=data['network_id']
+                        )
                     )
-                )
 
-            self.send_response(200)
-            self.end_headers()
+                self.send_response(200)
+                self.end_headers()
 
     return ServerHandler
 
