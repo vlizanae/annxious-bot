@@ -27,6 +27,8 @@ message = {
                    'Final val loss: {val_loss:.5f}\n'
                    'Best val loss: {best_val_loss:.5f} at epoch {best_val_epoch}',
 
+    'NETS_NOT_FOUND': 'I haven\'t heard of any of your networks recently.',
+
     'STATUS_0': 'Status for {network_id}: {epoch} epochs elapsed in {time!s}.\n'
                 'Train loss: {train_loss:.5f}\n'
                 'Best train loss: {best_train_loss:.5f} at epoch {best_train_epoch}',
@@ -51,7 +53,8 @@ message = {
             'Commands: type\n'
             ' - /start if for some reason I can\'t remember you.\n'
             ' - /help to see this message (again?).\n'
-            ' - /userid in case you lost you user id.\n '
+            ' - /userid in case you lost you user id.\n'
+            ' - /status to check your training networks.\n'
             '\n'
             'I don\'t have any kind of access to any part of your dataset and '
             'will never have. Also I\'m open source, feel free to submit any bug '

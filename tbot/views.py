@@ -55,6 +55,13 @@ def userid(bot, update, db):
 
 def status(bot, update, db):
     user_id = update.message.chat.id
+    net_list = db.get_user_networks(user_id)
+    if len(net_list) == 0:
+        bot.send_message(
+            chat_id=user_id,
+            text=message['NETS_NOT_FOUND']
+        )
+        return
     for network in db.get_user_networks(user_id):
         bot.send_message(
             chat_id=user_id,
