@@ -15,7 +15,27 @@ message = {
 
     'TRAIN_BEGIN': 'I heard {network_id} started training.',
 
-    'TRAIN_END': '{network_id} just told me its training is done.',
+    'TRAIN_END_0': '{network_id} just told me its training is done, '
+                   'after {time!s} and {epoch} epochs.\n'
+                   'Final train loss: {train_loss:.5f}\n'
+                   'Best train loss: {best_train_loss:.5f} at epoch {best_train_epoch}',
+
+    'TRAIN_END_1': '{network_id} just told me its training is done, '
+                   'after {time!s} and {epoch} epochs.\n'
+                   'Final train loss: {train_loss:.5f}\n'
+                   'Best train loss: {best_train_loss:.5f} at epoch {best_train_epoch}\n'
+                   'Final val loss: {val_loss:.5f}\n'
+                   'Best val loss: {best_val_loss:.5f} at epoch {best_val_epoch}',
+
+    'STATUS_0': 'Status for {network_id}: {epoch} epochs elapsed in {time!s}.\n'
+                'Train loss: {train_loss:.5f}\n'
+                'Best train loss: {best_train_loss:.5f} at epoch {best_train_epoch}',
+
+    'STATUS_1': 'Status for {network_id}: {epoch} epochs elapsed in {time!s}.\n'
+                'Train loss: {train_loss:.5f}\n'
+                'Best train loss: {best_train_loss:.5f} at epoch {best_train_epoch}\n'
+                'Validation loss: {val_loss:.5f}\n'
+                'Best val loss: {best_val_loss:.5f} at epoch {best_val_epoch}',
     
     'HELP': 'Artificial Neural Networks can take a lot of time to train, have '
             'you ever forgotten you were training networks because of that? well that\'s '
@@ -35,5 +55,5 @@ message = {
             '\n'
             'I don\'t have any kind of access to any part of your dataset and '
             'will never have. Also I\'m open source, feel free to submit any bug '
-            'report as an issue at my repo.'
+            'report or feature request as an issue at my repo.'
 }

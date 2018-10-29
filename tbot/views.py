@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from lang import message
 from config import callback_url, hosting_url
 
@@ -48,4 +50,25 @@ def userid(bot, update, db):
         bot.send_message(
             chat_id=user_id,
             text=message['USER_ID'].format(user_id=user_id)
+        )
+
+
+def status(bot, update, db):
+    user_id = update.message.chat.id
+    for network in db.get_user_networks(user_id):
+        bot.send_message(
+            chat_id=user_id,
+            text=message[
+                'STATUS_1' if network.val_loss is not None else 'STATUS_0'
+            ].format(
+                network_id=network.name[:-5],
+                time=datetime.now().replace(microsecond=0)-network.created.replace(microsecond=0),
+                epoch=network.epoch + 1,
+                train_loss=network.train_loss,
+                best_train_loss=network.best_train_loss,
+                best_train_epoch=network.best_train_epoch+1,
+                val_loss=network.val_loss,
+                best_val_loss=network.best_val_loss,
+                best_val_epoch=(network.best_val_epoch or -1)+1
+            )
         )

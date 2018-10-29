@@ -70,7 +70,7 @@ class Database:
                     user_id=user.id,
                     name=name,
                     created=datetime.now(),
-                    epoch=0
+                    epoch=-1
                 )
             )
             self.session.commit()
@@ -88,13 +88,21 @@ class Database:
         except:
             self.session.rollback()
 
-    def update_network(self, **kwargs):
+    def get_network(self, name):
+        network = None
         try:
             network = (
                 self.session.query(self.Network)
-                .filter(self.Network.name == kwargs['network_id'])
+                .filter(self.Network.name == name)
                 .one()
             )
+        except:
+            self.session.rollback()
+        return network
+
+    def update_network(self, **kwargs):
+        try:
+            network = self.get_network(kwargs['network_id'])
             network.epoch = kwargs['epoch']
 
             network.train_loss = kwargs['loss']
@@ -114,13 +122,20 @@ class Database:
 
     def deactivate_network(self, id):
         try:
-            network = (
-                self.session.query(self.Network)
-                .filter(self.Network.name == id)
-                .one()
-            )
+            network = self.get_network(id)
             network.active = False
             network.train_ended = datetime.now()
             self.session.commit()
         except:
             self.session.rollback()
+
+    def get_user_networks(self, id):
+        models = []
+        try:
+            user = self.get_user(id)
+            models = [
+                network for network in user.model_set.filter(self.Network.active)
+            ]
+        except:
+            self.session.rollback()
+        return models

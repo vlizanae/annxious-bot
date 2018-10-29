@@ -16,7 +16,8 @@ class UserModelMixin:
             'Network',
             order_by='Network.id',
             back_populates='user',
-            cascade='all, delete, delete-orphan'
+            cascade='all, delete, delete-orphan',
+            lazy='dynamic'
         )
 
     def __repr__(self):

@@ -1,16 +1,9 @@
 from telegram import Bot
 from telegram.ext import Updater, CommandHandler
 from telegram.utils.request import Request
-import logging
 
 from config import annxious_tbot_token
-from .views import start, help, userid
-
-
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO
-)
+from .views import start, help, userid, status
 
 
 class TelegramBot:
@@ -33,6 +26,9 @@ class TelegramBot:
         )
         updater.dispatcher.add_handler(
             CommandHandler('userid', lambda bot, update: userid(bot, update, self.db))
+        )
+        updater.dispatcher.add_handler(
+            CommandHandler('status', lambda bot, update: status(bot, update, self.db))
         )
 
         updater.start_polling()
