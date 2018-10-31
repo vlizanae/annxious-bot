@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from lang import message
-from config import callback_url, hosting_url
+from config import hosting_url
 
 
 def start(bot, update, db):
@@ -15,7 +15,6 @@ def start(bot, update, db):
             chat_id=user_id,
             text=message['WELCOME'].format(
                 user_name=user_name,
-                callback_url=callback_url,
                 hosting_url=hosting_url,
                 user_id=user_id
             )
@@ -31,7 +30,6 @@ def help(bot, update):
     bot.send_message(
         chat_id=update.message.chat.id,
         text=message['HELP'].format(
-            callback_url=callback_url,
             hosting_url=hosting_url
         )
     )

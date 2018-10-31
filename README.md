@@ -9,11 +9,15 @@ then it's the only thing he talks about. Add him on Telegram
 at [ANNxiousBot](t.me/ANNxiousBot).
 
 ## How to use the bot
-* Copy the custom [Keras' Callback](https://github.com/vlizanae/annxious-bot/blob/master/callback.py)
-into your project.
+* Install the custom Keras' Callback:
+```bash
+pip3 install annxious-callback
+```
 * Talk to ANNxious to get your user id.
 * Pass the callback to your model like this:
 ```python
+from annxious_callback import ANNxiousRemoteMonitor
+
 log = model.fit(
     train_set_X,
     train_set_y,

@@ -1,7 +1,7 @@
 message = {
     'WELCOME': 'Welcome {user_name}, I\'m ANNxious to give you some results! '
-               'Don\'t forget to copy my custom Keras\' callback template from '
-               '{callback_url}, point its url to {hosting_url}, pass it to your '
+               'Don\'t forget to install my custom Keras\' callback, import it, '
+               'point its url to {hosting_url}, pass it to your '
                'model and I\'ll keep in touch.\n'
                '\n'
                'Also you user id is {user_id}, you\'ll need it to use the callback.',
@@ -44,9 +44,10 @@ message = {
             'no longer an excuse as I\'ll get them to talk to you.\n'
             '\n'
             'How can you do that, you ask?\n'
-            ' - First copy my custom Keras\' callback from {callback_url} into your project.\n'
-            ' - Don\'t forget to point it towards {hosting_url}.\n'
+            ' - First install my custom Keras\' callback (pip install annxious-callback).\n'
+            ' - Import the callback (from annxious_callback import ANNxiousRemoteMonitor)'
             ' - Put the callback in your model\'s callbacks list when calling the "fit" method.\n'
+            ' - Don\'t forget to point it towards {hosting_url}.\n'
             ' - You have to pass the callback your user id and a keyword to identify the model.\n'
             ' - I\'ll let you know about your model.\n'
             '\n'
