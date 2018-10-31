@@ -2,3 +2,6 @@ env
 *__pycache__*
 config
 .idea
+annxious-callback/annxious_callback.egg-info
+annxious-callback/build
+annxious-callback/dist
